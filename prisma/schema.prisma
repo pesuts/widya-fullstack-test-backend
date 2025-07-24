@@ -19,4 +19,22 @@ model User {
   name      String
   email     String   @unique
   createdAt DateTime @default(now())
+  password  String
+}
+
+model Vehicle {
+  id          Int      @id @default(autoincrement())
+  name        String
+  status      Status
+  fuel_level  Float
+  odometer    Float
+  latitude    Float
+  longitude   Float
+  speed       Float
+  updated_at  DateTime @default(now())
+}
+
+enum Status {
+  ACTIVE
+  INACTIVE
 }
