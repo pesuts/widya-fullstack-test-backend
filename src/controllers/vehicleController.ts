@@ -6,7 +6,8 @@ export const getVehicles = async (req: Request, res: Response) => {
     const vehicles = await prisma.vehicle.findMany();
     if (!vehicles || vehicles.length === 0) {
       res.json({
-        message: "Kendaraan kosong",
+        status: "sucess",
+        message: "Vechiles Still Empty",
       });
     }
     return res.json({ data: vehicles, status: "success" });
@@ -28,8 +29,9 @@ export const getVehicleById = async (req: Request, res: Response) => {
   try {
     const vehicle = await prisma.vehicle.findUnique({ where: { id } });
     if (!vehicle) {
-      return res.json({
-        message: "Kendaraan kosong",
+      return res.status(404).send({
+        status: "error",
+        message: "Vehicle Not Found!",
       });
     }
     return res.json({

@@ -3,16 +3,22 @@ import * as bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import prisma from "../lib/prisma";
 
-export const getUserById = async (req: Request, res: Response) => {
-
-  const users = await prisma.user.findMany();
-  const newUsers = await Promise.all(
-    users.map(async (user) => ({
-      ...user,
-      password: await bcrypt.hash(user.password, 5),
-    }))
-  );
-  res.json(newUsers);
+export const getUsers = async (req: Request, res: Response) => {
+  try {
+    const users = await prisma.user.findMany({
+      select: {
+        id: true,
+        name: true,
+        email: true,
+      },
+    });
+    res.status(200).send({ status: "success", data: users });
+  } catch (err: any) {
+    return res.json({
+      message: err.message,
+      status: "error",
+    });
+  }
 };
 
 export const loginUser = async (req: Request, res: Response) => {
@@ -28,7 +34,8 @@ export const loginUser = async (req: Request, res: Response) => {
       where: { email },
     });
     if (!user) {
-      return res.json({
+      return res.status(404).send({
+        status: "error",
         message: "User not found",
       });
     }
@@ -38,7 +45,6 @@ export const loginUser = async (req: Request, res: Response) => {
         .status(401)
         .send({ status: "error", message: "Wrong password!" });
     }
-    console.log(secretKey);
 
     const token = jwt.sign(
       {
@@ -49,7 +55,7 @@ export const loginUser = async (req: Request, res: Response) => {
       secretKey,
       { expiresIn: "30m" }
     );
-    console.log("towt");
+
     return res
       .status(200)
       .send({ status: "success", message: "Login success", token });

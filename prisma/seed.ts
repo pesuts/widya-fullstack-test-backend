@@ -1,8 +1,17 @@
 import { PrismaClient, Status } from "@prisma/client";
+import bcrypt from "bcrypt";
 
 const prisma = new PrismaClient();
 
 async function main() {
+  await prisma.user.create({
+      data: {
+        name: "widya robotics",
+        email: "widta@robot.com",
+        password: await bcrypt.hash("widya123", 5)
+      }
+  });
+
   await prisma.vehicle.createMany({
     data: [
       {
@@ -140,7 +149,7 @@ async function main() {
     ],
   });
 
-  console.log("12 data baru kendaraan berhasil ditambahkan!");
+  console.log("Proses data seed berhasil!");
 }
 
 main()
