@@ -6,6 +6,6 @@
     "skipLibCheck": true,
     "esModuleInterop": true
   },
-  "include": ["**/*"],
+  "include": ["api/*.ts", "**/*"],
   "exclude": ["node_modules", "dist"]
 }
