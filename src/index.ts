@@ -5,22 +5,12 @@ const cors = require("cors");
 import dotenv from "dotenv";
 dotenv.config();
 
-import { createServer } from "http";
-
 const app = express();
 const PORT: number = parseInt(process.env.PORT || "8080", 10);
 
 app.use(cors());
 app.use(express.json());
 app.use(router);
-
-// export default app;
-
-// export default function handler(req: any, res: any) {
-//   return server.emit("request", req, res);
-// }
-
-// const server = createServer(app);
 
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);
