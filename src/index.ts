@@ -14,7 +14,7 @@ app.use(cors());
 app.use(express.json());
 app.use(router);
 
-export default app;
+// export default app;
 
 // export default function handler(req: any, res: any) {
 //   return server.emit("request", req, res);
@@ -22,6 +22,6 @@ export default app;
 
 // const server = createServer(app);
 
-// app.listen(PORT, () => {
-//   console.log(`Server is running at http://localhost:${PORT}`);
-// });
+app.listen(PORT, () => {
+  console.log(`Server is running at http://localhost:${PORT}`);
+});
