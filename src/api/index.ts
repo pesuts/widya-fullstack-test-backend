@@ -1,5 +1,5 @@
 import express from "express";
-import router from "./routes";
+import router from "../routes";
 const cors = require("cors");
 
 import dotenv from "dotenv";
@@ -12,7 +12,9 @@ app.use(cors());
 app.use(express.json());
 app.use(router);
 
-export default app;
-// app.listen(PORT, () => {
-//   console.log(`Server is running at http://localhost:${PORT}`);
-// });
+import { createServer } from 'http';
+const server = createServer(app);
+
+export default async function handler(req: any, res: any) {
+  server.emit('request', req, res);
+}
