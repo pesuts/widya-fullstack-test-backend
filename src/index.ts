@@ -14,13 +14,14 @@ app.use(cors());
 app.use(express.json());
 app.use(router);
 
-// Wrap with Vercel-compatible handler
-const server = createServer(app);
+export default app;
 
-export default function handler(req: any, res: any) {
-  return server.emit("request", req, res);
-}
-// export default app;
+// export default function handler(req: any, res: any) {
+//   return server.emit("request", req, res);
+// }
+
+// const server = createServer(app);
+
 // app.listen(PORT, () => {
 //   console.log(`Server is running at http://localhost:${PORT}`);
 // });
